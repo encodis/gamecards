@@ -86,7 +86,7 @@ def gamecards(input, template, output, styles='cards.css', rows=3, cols=3):
 
 ### MAIN ###
 
-__version__ = '1.0.0'
+__version__ = '0.0.2'
 
 # execute if main
 

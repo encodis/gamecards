@@ -23,8 +23,7 @@
             <args>
                 <arg value="examples/cards.csv"/>
                 <arg value="examples/cards.tpl"/>
-                <arg value="${build.dir}/cards.html"/>
-                <arg value="--css=../examples/cards.css"/>
+                <arg value="examples/cards.html"/>
             </args>
         </python>
     </target>
@@ -43,7 +42,7 @@
         description="Make local distribution"
         depends="version">
 
-        <python-build-distribution dir="${build.dir}"/>
+        <python-build-distribution dir="${dist.dir}"/>
     </target>
 
 
