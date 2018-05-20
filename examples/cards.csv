@@ -1,0 +1,12 @@
+ID,Title,Play,Icon,Level,Effect
+1,Handy Rope,Your turn,,1,"Move yourself to any zone on the battlefield, then take your actions"
+2,Ha!,"Any time, when you fail a saving throw",,1,You automatically make the save
+3,Just a Flesh Wound,Any time,,1,"You look like a mess, but are really okay. All damage you have taken is healed."
+4,Riposte,After an opponent attacks you and misses,,1,You immediately get a bonus attack against that opponent
+5,Sweep,Your turn,,1,A weapon or leg sweep trips your opponent—one close enemy is disabled
+6,Feint,Your turn,,1,"Your first attack was merely a feint, setting up the real attack. Make a bonus melee attack."
+7,En Garde!,Your turn,,1,"In addition to your regular attack, make a free attack to disarm your enemy"
+8,Feet Don’t</br>Fail Me Now!,Your turn,,1,If you move this round you can move two zones
+9,Outta My Way!,Your turn,,1,Gain a +4 bonus to an Attack roll when making a push tactic
+10,Measly Swipe,After being hit by a melee attack,,1,The damage caused by that attack is reduced by 1
+100,Leap A Little Higher,Any time,card-joker,3,A clue is explained and made clear to you by the DM
