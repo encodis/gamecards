@@ -37,8 +37,8 @@ def gamecards(input, template, output, styles='cards.css', rows=3, cols=3):
 
     header = header % ('\n').join(style_list)
 
-    with open(template, 'r', encoding="utf8") as tpl_file:
-        cell = tpl_file.read()
+    with open(template, 'r', encoding="utf8") as t:
+        cell = t.read()
 
     output_file = open(output, "w", encoding="utf8")
 
@@ -48,8 +48,8 @@ def gamecards(input, template, output, styles='cards.css', rows=3, cols=3):
 
     output_file.write(header)
 
-    with open(input, "r", encoding="utf8") as csvfile:
-        reader = csv.DictReader(csvfile)
+    with open(input, "r", encoding="utf8") as c:
+        reader = csv.DictReader(c)
 
         for line in reader:
 
@@ -86,7 +86,7 @@ def gamecards(input, template, output, styles='cards.css', rows=3, cols=3):
 
 ### MAIN ###
 
-__version__ = '0.0.2'
+__version__ = '0.1.0'
 
 # execute if main
 

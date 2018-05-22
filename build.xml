@@ -42,7 +42,7 @@
         description="Make local distribution"
         depends="version">
 
-        <python-build-distribution dir="${dist.dir}"/>
+        <python-build-distribution dir="${build.dir}"/>
     </target>
 
 
@@ -51,6 +51,7 @@
         description="Make formal distribution"
         depends="version">
 
+        <mkdir dir="${dist.dir}"/>
         <python-build-distribution/>
     </target>
 

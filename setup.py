@@ -1,19 +1,14 @@
 """Convert a CSV file into HTML pages of cards, for subsequent printing
 
-
 """
 
+import pypandoc
 from distutils.core import setup
-from codecs import open
-from os import path
 
-here = path.abspath(path.dirname(__file__))
-
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+long_description = pypandoc.convert('README.md', 'rst')
 
 setup(name='gamecards',
-      version='0.0.2',
+      version='0.1.0',
       description='Convert CSV file into game cards using a template',
       long_description=long_description,
       url='https://github.com/encodis/gamecards',
