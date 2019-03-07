@@ -10,7 +10,7 @@ import argparse
 from string import Template
 
 
-def gamecards(input, template, output, styles='cards.css', rows=3, cols=3):
+def gamecards(source, template, output, styles='cards.css', rows=3, cols=3):
 
     # set up header and footer
     header = """<!DOCTYPE html>
@@ -33,10 +33,12 @@ def gamecards(input, template, output, styles='cards.css', rows=3, cols=3):
 """
 
     # make stylesheet markup from styles parameter
-    style_list = [ '<link rel="stylesheet" href="' + s + '">' for s in styles.split(',') ]
+    style_list = ['<link rel="stylesheet" href="' + s + '">' for s in styles.split(',')]
 
+    # update header HTML with styles
     header = header % ('\n').join(style_list)
 
+    # read template file
     with open(template, 'r', encoding="utf8") as t:
         cell = t.read()
 
@@ -48,7 +50,7 @@ def gamecards(input, template, output, styles='cards.css', rows=3, cols=3):
 
     output_file.write(header)
 
-    with open(input, "r", encoding="utf8") as c:
+    with open(source, "r", encoding="utf8") as c:
         reader = csv.DictReader(c)
 
         for line in reader:
@@ -84,15 +86,15 @@ def gamecards(input, template, output, styles='cards.css', rows=3, cols=3):
     output_file.write(footer)
 
 
-### MAIN ###
+# MAIN #
 
 __version__ = '0.1.0'
 
 # execute if main
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Convert CSV file into game cards using a template")
-    parser.add_argument("input", help="Input file (CSV)")
+    parser = argparse.ArgumentParser(description="Convert CSV file or folder of Markdown files into game cards using a template")
+    parser.add_argument("source", help="Source file (CSV) or folder ()")
     parser.add_argument("template", help="Template file (HTML fragment)")
     parser.add_argument("output", help="Output file (HTML)")
     parser.add_argument("--css", default="cards.css", help="List of CSS style files (default: cards.css)", action="store")
@@ -100,5 +102,4 @@ if __name__ == "__main__":
     parser.add_argument("--cols", default="3", help="Columns per page (default: 3)", type=int, action="store")
     args = parser.parse_args()
 
-    gamecards(args.input, args.template, args.output, styles=args.css, rows=args.rows, cols=args.cols)
-
+    gamecards(args.source, args.template, args.output, styles=args.css, rows=args.rows, cols=args.cols)
