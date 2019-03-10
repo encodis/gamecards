@@ -8,19 +8,23 @@
 import csv
 import argparse
 from string import Template
+from itertools import zip_longest
 
 
 def gamecards(source, template, output, styles='cards.css', rows=3, cols=3):
 
+    # make stylesheet markup from styles parameter
+    style_list = ('\n').join(['<link rel="stylesheet" href="' + s + '"/>' for s in styles.split(',')])
+
     # set up header and footer
-    header = """<!DOCTYPE html>
+    header = f"""<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="generator" content="gamecards" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>Game Cards</title>
-    %s
+    {style_list}
 </head>
 <body>
     <div id="cards">
@@ -32,61 +36,43 @@ def gamecards(source, template, output, styles='cards.css', rows=3, cols=3):
 </html>
 """
 
-    # make stylesheet markup from styles parameter
-    style_list = ['<link rel="stylesheet" href="' + s + '">' for s in styles.split(',')]
-
-    # update header HTML with styles
-    header = header % ('\n').join(style_list)
-
     # read template file
     with open(template, 'r', encoding="utf8") as t:
-        cell = t.read()
-
-    output_file = open(output, "w", encoding="utf8")
+        cell_template = t.read()
 
     # process CSV file
+    with open(output, "w", encoding="utf8") as output_file, open(source, "r", encoding="utf8") as c:
 
-    count = 1
+        csv_reader = csv.DictReader(c)
+        output_file.write(header)
 
-    output_file.write(header)
+        while True:
+            table_group = list(zip(range(rows * cols), csv_reader))
 
-    with open(source, "r", encoding="utf8") as c:
-        reader = csv.DictReader(c)
+            if len(table_group) == 0:
+                break
 
-        for line in reader:
+            output_file.write('<table class="page">')
 
-            if count == 1:
-                output_file.write('<table class="page">')
+            row_group = list(zip_longest(*(iter(table_group),) * rows))
 
-            if count % cols == 1:
+            for row in row_group:
                 output_file.write('<tr>')
 
-            output_file.write('<td>')
+                for cell in list(row):
+                    if cell is not None:
+                        output_file.write('<td>')
+                        output_file.write(str(Template(cell_template).safe_substitute(cell[1])))
+                        output_file.write('</td>')
 
-            output_file.write(str(Template(cell).safe_substitute(line)))
-
-            output_file.write('</td>')
-
-            if count % cols == 0:
                 output_file.write('</tr>')
 
-            if count == rows * cols:
-                output_file.write('</table>')
-                count = 0
-
-            count = count + 1
-
-        # ended last row early
-        if (count - 1) % cols != 0:
-            output_file.write('</tr>')
-
-        if (count - 1) != rows * cols:
             output_file.write('</table>')
 
-    output_file.write(footer)
-
+        output_file.write(footer)
 
 # MAIN #
+
 
 __version__ = '0.1.0'
 
