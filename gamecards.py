@@ -14,7 +14,7 @@ from itertools import zip_longest
 def gamecards(source, template, output, styles='cards.css', rows=3, cols=3):
 
     # make stylesheet markup from styles parameter
-    style_list = ('\n').join(['<link rel="stylesheet" href="' + s + '"/>' for s in styles.split(',')])
+    style_list = ('\n').join([f'<link rel="stylesheet" href="{s}"/>' for s in styles.split(',')])
 
     # set up header and footer
     header = f"""<!DOCTYPE html>
