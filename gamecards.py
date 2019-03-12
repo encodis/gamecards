@@ -37,13 +37,13 @@ def gamecards(source, template, output, styles='cards.css', rows=3, cols=3):
 """
 
     # read template file
-    with open(template, 'r', encoding="utf8") as t:
-        cell_template = t.read()
+    with open(template, 'r', encoding="utf8") as template_file:
+        cell_template = template_file.read()
 
     # process CSV file
-    with open(output, "w", encoding="utf8") as output_file, open(source, "r", encoding="utf8") as c:
+    with open(output, "w", encoding="utf8") as output_file, open(source, "r", encoding="utf8") as csv_file:
 
-        csv_reader = csv.DictReader(c)
+        csv_reader = csv.DictReader(csv_file)
         output_file.write(header)
 
         while True:
