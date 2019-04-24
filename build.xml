@@ -16,20 +16,6 @@
     <!-- build targets -->
 
     <target
-        name="test"
-        description="Run local script on single test files">
-
-        <python script="./${module.py}">
-            <args>
-                <arg value="examples/cards.csv"/>
-                <arg value="examples/cards.tpl"/>
-                <arg value="examples/cards.html"/>
-            </args>
-        </python>
-    </target>
-
-
-    <target
         name="version"
         description="Update version number from source">
 

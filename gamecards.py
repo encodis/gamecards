@@ -11,10 +11,10 @@ from string import Template
 from itertools import zip_longest
 
 
-def gamecards(source, template, output, styles='cards.css', rows=3, cols=3):
+def gamecards(source, template, styles, output, rows=3, cols=3):
 
     # make stylesheet markup from styles parameter
-    style_list = ('\n').join([f'<link rel="stylesheet" href="{s}"/>' for s in styles.split(',')])
+    style_list = '\n'.join([f'<link rel="stylesheet" href="{s}"/>' for s in styles.split(',')])
 
     # set up header and footer
     header = f"""<!DOCTYPE html>
@@ -82,10 +82,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert CSV file or folder of Markdown files into game cards using a template")
     parser.add_argument("source", help="Source file (CSV) or folder ()")
     parser.add_argument("template", help="Template file (HTML fragment)")
+    parser.add_argument("styles", help="List of CSS style files (relative to output file)", action="store")
     parser.add_argument("output", help="Output file (HTML)")
-    parser.add_argument("--css", default="cards.css", help="List of CSS style files (default: cards.css)", action="store")
     parser.add_argument("--rows", default="3", help="Rows per page (default: 3)", type=int, action="store")
     parser.add_argument("--cols", default="3", help="Columns per page (default: 3)", type=int, action="store")
     args = parser.parse_args()
 
-    gamecards(args.source, args.template, args.output, styles=args.css, rows=args.rows, cols=args.cols)
+    gamecards(args.source, args.template, args.styles, args.output, rows=args.rows, cols=args.cols)
