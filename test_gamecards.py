@@ -40,10 +40,15 @@ def test_gamecards(tmpdir):
     <meta name="generator" content="gamecards" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>Game Cards</title>
+    <style>
+    @media print {
+     .page { page-break-after: always; }
+    }
+    </style>
     <link rel="stylesheet" href="cards.css"/>
 </head>
 <body>
-    <div id="cards">
+    <div id="gamecards">
 <table class="page"><tr><td><div class='card'>
         <div class='field1'>
             <p>Field 1 text line 1</p>
@@ -132,10 +137,15 @@ def test_gamecards_single(tmpdir):
     <meta name="generator" content="gamecards" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>Game Cards</title>
+    <style>
+    @media print {
+     .page { page-break-after: always; }
+    }
+    </style>
     <link rel="stylesheet" href="cards.css"/>
 </head>
 <body>
-    <div id="cards">
+    <div id="gamecards">
 <table class="page"><tr><td><div class='card'>
         <div class='field1'>
             <p>Field 1 text</p>
@@ -195,11 +205,16 @@ def test_gamecards_multiple_styles(tmpdir):
     <meta name="generator" content="gamecards" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>Game Cards</title>
+    <style>
+    @media print {
+     .page { page-break-after: always; }
+    }
+    </style>
     <link rel="stylesheet" href="cards1.css"/>
 <link rel="stylesheet" href="cards2.css"/>
 </head>
 <body>
-    <div id="cards">
+    <div id="gamecards">
 <table class="page"><tr><td><div class='card'>
         <div class='field1'>
             <p>Field 1 text</p>
@@ -259,10 +274,15 @@ def test_gamecards_no_styles(tmpdir):
     <meta name="generator" content="gamecards" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>Game Cards</title>
+    <style>
+    @media print {
+     .page { page-break-after: always; }
+    }
+    </style>
     
 </head>
 <body>
-    <div id="cards">
+    <div id="gamecards">
 <table class="page"><tr><td><div class='card'>
         <div class='field1'>
             <p>Field 1 text</p>

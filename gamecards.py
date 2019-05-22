@@ -27,10 +27,15 @@ def gamecards(source, template, styles, output, rows=3, cols=3):
     <meta name="generator" content="gamecards" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>Game Cards</title>
+    <style>
+    @media print {{
+     .page {{ page-break-after: always; }}
+    }}
+    </style>
     {style_list}
 </head>
 <body>
-    <div id="cards">
+    <div id="gamecards">
 """
 
     footer = """
