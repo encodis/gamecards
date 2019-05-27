@@ -1,30 +1,40 @@
 # Introduction
 
-A Python module to transform a CSV file into an HTML file containing a series of tables, each cell of which represents a gaming card. A template must be supplied that conforms to the Python string template format---this becomes the contents of each cell, with the CSV file filling in the placeholders.
+Lately it seems that cards have become a popular accessory in tabletop role playing games. These can be used to provide a physical representation of items, spells or other gaming elements. Most decks are produced using image editors like GIMP or Photoshop, which is fine if you have the time, the software and the skills to use it. 
+
+Gamecards tries to automate this process. It takes a CSV file where each row represents an item, spell or other gaming element and each field in the row represents a property or attribute of that item, and converts it into a number of HTML pages. Each page contains a table, and each cell of the table contains a representation of the item, rendered according to a template file.
+
+The resulting HTML file can then be printed and cut up to produce the cards themselves.
 
 ## Installation
 
 ```
-$ pip install gamecards
+$ pip install --upgrade gamecards
 ```
 
 ## Usage
 
-The `gamecards` script simply takes four arguments: the CSV file containing the data, a template HTML file, a CSS specification (a file name, or comma separated list of file names) and the output HTML file name:
+The `gamecards` script simply takes four arguments (in this order): the CSV file containing the data, a template HTML file, a CSS specification (a file name, or comma separated list of file names) and the output HTML file name:
 
 ```
 $ python -m gamecards cards.csv cards.tpl cards.css cards.html
 ```
 
+Or use the console script:
+
+```
+$ gamecards cards.csv cards.tpl cards.css cards.html
+```
+
 The default is for each 'page' of the file to contain 3 rows and 3 columns. This can be changed using the `--rows` and `--cols` arguments:
 
 ```
-$ python -m gamecards cards.csv cards.tpl cards.css cards.html --rows 2 --cols 4
+$ gamecards cards.csv cards.tpl cards.css cards.html --rows 2 --cols 4
 ```
 
 ## CSV file
 
-The CSV file must start with a header line that describes the fields. These will be used in the template file. If a field contains a comma it must be enclosed in quotes. For example:
+The CSV file must start with a header line that names each of the fields. These will be used in the template file. If a field contains a comma it must be enclosed in quotes. For example:
 
 ```
 ID,Field1,Field2
@@ -48,7 +58,7 @@ will be repeated for each line of the CSV file, once per table cell in the outpu
 
 ## CSS styling
 
-The styling for the output HTML can be controlled by including the names of CSS files. This becomes a standard "stylesheet" link in the output HTML's `<head>` element. For example, if the usage example above the `cards.css` style argument will become:
+The styling for the output HTML can be controlled by including the names of CSS files. This becomes a standard "stylesheet" link in the output HTML's `<head>` element. For example, in the usage example above the `cards.css` style argument will become:
 
 ```
 <link rel="stylesheet" href="cards.css"/>
@@ -60,7 +70,7 @@ The final appearance of the cards depends entirely on how you arrange the templa
 
 ## Output file
 
-The output file conforms to the HTML5 specification and consists of a number of `<table>` elements each containing 3 rows with 3 columns (or whatever was specified using the `--rows` and `--cols` arguments). Each `<table>` has the 'page' class which is used to enforce pagination when printed, by the following style automatically included in the output file:
+The output file conforms to the HTML5 specification and consists of a number of `<table>` elements each containing 3 rows with 3 columns (or whatever was specified using the `--rows` and `--cols` arguments). The entire body of the output document (i.e. the (only) child of `<body>`) is a `<div>` element with an ID of "gamecards". Each `<table>` element within this `<div>` has the 'page' class which is used to enforce pagination when printed - the following style is automatically included in the output file:
 
 ```
 @media print {
@@ -70,9 +80,66 @@ The output file conforms to the HTML5 specification and consists of a number of 
 }
 ```
 
+This can be overridden by an included CSS file if required. It is generally assumed that all styling will be done within each cell, i.e. on the supplied template; the table structure simply provides a framework.
 
-entire body enclosed in div with id gamecards
+## Development notes
 
-This can be overridden by an included CSS file if required.
+### Unit testing
 
-It is generally assumed that all styling will be done within each cell, i.e. on the supplied template; the table structure simply provides a framework.
+A small number of tests are included in the `test_gamecards.py` file and can be run using the [pytest](https://pypi.org/project/pytest/) application.
+
+### Packaging a distribution
+
+When ready for a release use the [bumpversion](https://pypi.org/project/bumpversion/) application to update the version number, e.g.
+
+```
+$ bumpversion major --tag
+```
+
+This will update the source file and the setup configuration. Then build the distribution:
+
+```
+$ python setup.py bdist_wheel
+```
+
+### Testing installation
+
+Testing that the distribution installs correctly can be accomplished using Docker. Use the following command (which will download the "python" Docker image if necessary, so it might take a couple of minutes when first run):
+
+```
+$ docker run -it -v "$PWD":/mnt --entrypoint=bash python
+```
+
+This will start the "python" Docker image and execute a command prompt. From here install the "gamecards" distribution from the local "dist" folder (mounted in the Docker image under "/mnt"):
+
+```
+root@382a37174524:/# pip install gamecards --no-index --find-links /mnt/dist"
+root@382a37174524:/# gamecards -h
+root@382a37174524:/# python
+>>> import gamecards
+>>> exit()
+```
+
+### Upload to TestPyPi
+
+Upload the distribution to the TestPyPi site:
+
+```
+$ twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+```
+
+Then run the "python" Docker image and attempt to install from there:
+
+```
+$ docker run -it -v "$PWD":/mnt --entrypoint=bash python
+root@382a37174524:/# pip install --index-url https://test.pypi.org/simple/ gamecards
+root@382a37174524:/# gamecards -h
+```
+
+### Upload to PyPi
+
+Upload to the real package index as follows (or specify the latest distribution):
+
+```
+$ twine upload dist/*
+```
