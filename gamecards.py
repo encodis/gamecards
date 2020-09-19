@@ -65,7 +65,7 @@ def gamecards(source, template, styles, output, rows=3, cols=3):
 
             output_file.write('<table class="page">')
 
-            row_group = list(zip_longest(*(iter(table_group),) * rows))
+            row_group = list(zip_longest(*(iter(table_group),) * cols))
 
             for row in row_group:
                 output_file.write('<tr>')
