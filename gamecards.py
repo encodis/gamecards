@@ -71,7 +71,7 @@ def gamecards(source, template, styles, output, rows=3, cols=3):
                 output_file.write('<tr>')
 
                 for cell in list(row):
-                    if cell is not None:
+                    if cell:
                         output_file.write('<td>')
                         output_file.write(str(Template(cell_template).safe_substitute(cell[1])))
                         output_file.write('</td>')
