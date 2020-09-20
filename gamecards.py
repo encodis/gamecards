@@ -11,7 +11,7 @@ import sys
 from string import Template
 from itertools import zip_longest
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 
 def gamecards(source, template, styles, output, rows=3, cols=3):
