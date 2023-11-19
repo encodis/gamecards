@@ -5,7 +5,7 @@ Lately it seems that cards have become a popular accessory in tabletop role play
 Gamecards tries to automate this process. It takes a CSV file where each row represents an item, spell or other gaming element and each field in the row represents a property or attribute of that item, and converts it into a number of HTML pages. Each page contains a table, and each cell of the table contains a representation of the item, rendered according to a template file.
 
 The resulting HTML file can then be printed and cut up to produce the cards themselves.
-
+ 
 ## Installation
 
 ```
