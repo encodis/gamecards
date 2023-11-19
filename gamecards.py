@@ -13,8 +13,11 @@ from itertools import zip_longest
 
 __version__ = '1.1.0'
 
+# TODO: fix --backs argparse spec
+# TODO: find a way for backs to apply an offset from Top/Left so you can align them better
+# thbis may mean that it has to know how wide the page is and insert its own styling
 
-def gamecards(source, template, styles, output, rows=3, cols=3):
+def gamecards(source, template, styles, output, title="Game Cards", backs=False, rows=3, cols=3):
 
     # make stylesheet markup from styles parameter
     style_list = ''
@@ -23,13 +26,14 @@ def gamecards(source, template, styles, output, rows=3, cols=3):
         style_list = '\n'.join([f'<link rel="stylesheet" href="{s}"/>' for s in styles.split(',')])
 
     # set up header and footer
+    # TODO parameter for page title
     header = f"""<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="generator" content="gamecards" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>Game Cards</title>
+    <title>{title}</title>
     <style>
     @media print {{
      .page {{ page-break-after: always; }}
@@ -67,6 +71,9 @@ def gamecards(source, template, styles, output, rows=3, cols=3):
 
             row_group = list(zip_longest(*(iter(table_group),) * cols))
 
+            if backs:
+                row_group = reversed(row_group)
+
             for row in row_group:
                 output_file.write('<tr>')
 
@@ -92,11 +99,14 @@ def main(args=None):
     parser.add_argument("template", help="Template file (HTML fragment)")
     parser.add_argument("styles", help="List of CSS style files (relative to output file)", action="store")
     parser.add_argument("output", help="Output file (HTML)")
+    parser.add_argument("--title", default="Game Cards", help="Title of the HTML page")
+    parser.add_argument("--backs", default=False, help="Reverse row order for card backs", type=bool, action="store")
     parser.add_argument("--rows", default="3", help="Rows per page (default: 3)", type=int, action="store")
     parser.add_argument("--cols", default="3", help="Columns per page (default: 3)", type=int, action="store")
     args = parser.parse_args(args)
 
-    gamecards(args.source, args.template, args.styles, args.output, rows=args.rows, cols=args.cols)
+    gamecards(args.source, args.template, args.styles, args.output,
+              title=args.title, backs=args.backs, rows=args.rows, cols=args.cols)
 
 
 if __name__ == "__main__":

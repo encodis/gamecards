@@ -82,6 +82,12 @@ The output file conforms to the HTML5 specification and consists of a number of 
 
 This can be overridden by an included CSS file if required. It is generally assumed that all styling will be done within each cell, i.e. on the supplied template; the table structure simply provides a framework.
 
+## Card backs
+
+Use the `--backs` option to reverse the order of each row so that the backs of cards can be printed. The assumptions being made here are that (i) the backs are unique to each card and (ii) the sheet with the backs will be turned over and "glued" onto the back of the main sheet, i.e. they will be joined along the "long edge".
+
+It is recommended that the same CSV file is used (so the order of the cards is the same) but that it contains the information for the back of the card. Different template and stying files will almost certainly be required.
+
 ## Development notes
 
 ### Unit testing
