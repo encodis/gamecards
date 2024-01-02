@@ -1,6 +1,6 @@
 import os
 
-from gamecards import gamecards
+from gamecards.gamecards import gamecards
 
 
 def test_gamecards(tmpdir):

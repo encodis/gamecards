@@ -11,8 +11,6 @@ import sys
 from string import Template
 from itertools import zip_longest
 
-__version__ = '1.1.0'
-
 # TODO: fix --backs argparse spec
 # TODO: find a way for backs to apply an offset from Top/Left so you can align them better
 # thbis may mean that it has to know how wide the page is and insert its own styling

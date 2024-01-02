@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "gamecards"
+version = "1.2.0"
+description = "Convert a CSV file into HTML pages of cards, for subsequent printing"
+authors = ["Philip Hodder <philip.hodder@encodis.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/encodis/gamecards"
+keywords = ["gamecards", "cards", "games", "playing"]
+classifiers = [
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python :: 3.12',
+    'Topic :: Games/Entertainment :: Role-Playing'
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.4"
+
+[tool.poetry.scripts]
+gamecards = "gamecards:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

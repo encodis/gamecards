@@ -96,16 +96,16 @@ A small number of tests are included in the `test_gamecards.py` file and can be 
 
 ### Packaging a distribution
 
-When ready for a release use the [bumpversion](https://pypi.org/project/bumpversion/) application to update the version number, e.g.
+When ready for a release update the version number, e.g.
 
 ```
-$ bumpversion major --tag
+$ poetry version major
 ```
 
 This will update the source file and the setup configuration. Then build the distribution:
 
 ```
-$ python setup.py bdist_wheel
+$ poetry build
 ```
 
 ### Testing installation
